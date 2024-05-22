@@ -107,12 +107,20 @@ function whenClicked(e: MouseEvent) {
     sourceStatus = 'SELECTED';
     sourceBtn?.classList.remove('source-clicked');
     disableControlPanel(false);
+    if (pathHoles.has(`${row}-${col}`)) {
+      pathHoles.delete(`${row}-${col}`);
+      block.classList.remove('wall-block');
+    }
     block.classList.add('source-block');
   } else if (destinationStatus === 'SELECTING') {
     destination = [parseInt(row), parseInt(col)];
     destinationStatus = 'SELECTED';
     destinationBtn?.classList.remove('destination-clicked');
     disableControlPanel(false);
+    if (pathHoles.has(`${row}-${col}`)) {
+      pathHoles.delete(`${row}-${col}`);
+      block.classList.remove('wall-block');
+    }
     block.classList.add('destination-block');
   }
 }
