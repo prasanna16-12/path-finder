@@ -201,7 +201,7 @@ async function bfs(e: MouseEvent) {
     [prevRow, prevCol] = prevTrack.get(`${prevRow}-${prevCol}`)!;
     if (JSON.stringify([prevRow, prevCol]) !== JSON.stringify(source)) {
       const currBlock = document.getElementById(`${prevRow}-${prevCol}`);
-      await new Promise(resolve => setTimeout(resolve, 100)).then(() => {
+      await new Promise(resolve => setTimeout(resolve, speed)).then(() => {
         currBlock?.classList.add('path-block');
       });
     }
@@ -254,19 +254,10 @@ async function maze(e: MouseEvent) {
 
     const neighbors = getAvailableNeighbors(currentCell[0], currentCell[1]);
     if (neighbors.length > 0) {
+      stack.push(currentCell);
       const chosenIndex = Math.floor(Math.random() * neighbors.length);
       const chosenNeighbor = neighbors[chosenIndex];
       visited.add(`${chosenNeighbor[0]}-${chosenNeighbor[1]}`);
-      for (let i = 0; i < neighbors.length; i++) {
-        const currNeighbour = neighbors[i];
-        if (
-          i !== chosenIndex &&
-          !visited.has(`${currNeighbour[0]}-${currNeighbour[1]}`)
-        ) {
-          // visited.add(`${currNeighbour[0]}-${currNeighbour[1]}`);
-          stack.push(neighbors[i]);
-        }
-      }
       stack.push(chosenNeighbor);
       connect(currentCell, chosenNeighbor);
     }
@@ -356,11 +347,121 @@ function endDrawing(e: MouseEvent): any {
   }
 }
 
+async function designMaze() {
+  mazeBtn.classList.add('maze-clicked');
+  disableControlPanel(true);
+
+  // add all to path holes
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      pathHoles.add(`${r}-${c}`);
+    }
+  }
+  const childElements = grid.children!;
+  if (childElements !== undefined) {
+    for (const childElement of childElements) {
+      childElement.classList.add('wall-block');
+    }
+  }
+
+  const randomBlock = [
+    1, //Math.ceil(Math.random() * rows),
+    1, //Math.ceil(Math.random() * cols),
+  ];
+  const visited = new Set<string>();
+  visited.add(`${randomBlock[0]}-${randomBlock[1]}`);
+  const stack: number[][] = [randomBlock];
+
+  while (stack.length > 0) {
+    const currentCell = stack.pop()!;
+    // make road
+    const currBlock = document.getElementById(
+      `${currentCell[0]}-${currentCell[1]}`
+    )!;
+    await new Promise(resolve => setTimeout(resolve, speed)).then(() => {
+      currBlock.classList.remove('wall-block');
+    });
+
+    pathHoles.delete(`${currentCell[0]}-${currentCell[1]}`);
+
+    const neighbors = getAvailableNeighbors(currentCell[0], currentCell[1]);
+    if (neighbors.length > 0) {
+      // stack.push(currentCell);
+      const chosenIndex = Math.floor(Math.random() * neighbors.length);
+      const chosenNeighbor = neighbors[chosenIndex];
+      visited.add(`${chosenNeighbor[0]}-${chosenNeighbor[1]}`);
+      for (let i = 0; i < neighbors.length; i++) {
+        const currNeighbour = neighbors[i];
+        if (
+          i !== chosenIndex &&
+          !visited.has(`${currNeighbour[0]}-${currNeighbour[1]}`)
+        ) {
+          // visited.add(`${currNeighbour[0]}-${currNeighbour[1]}`);
+          stack.push(neighbors[i]);
+        }
+      }
+      stack.push(chosenNeighbor);
+      connect(currentCell, chosenNeighbor);
+    }
+  }
+
+  mazeBtn.classList.remove('maze-clicked');
+  disableControlPanel(false);
+
+  async function connect(start: number[], end: number[]) {
+    let midRow: number;
+    let midCol: number;
+
+    if (start[0] !== end[0]) {
+      midRow = Math.min(start[0], end[0]) + 1;
+    } else {
+      midRow = start[0];
+    }
+
+    if (start[1] !== end[1]) {
+      midCol = Math.min(start[1], end[1]) + 1;
+    } else {
+      midCol = start[1];
+    }
+    //path in bettween
+    const midBlock = document.getElementById(`${midRow}-${midCol}`)!;
+    await new Promise(resolve => setTimeout(resolve, speed)).then(() => {
+      midBlock.classList.remove('wall-block');
+    });
+    pathHoles.delete(`${midRow}-${midCol}`);
+
+    const endBlock = document.getElementById(`${end[0]}-${end[1]}`)!;
+    await new Promise(resolve => setTimeout(resolve, speed)).then(() => {
+      endBlock.classList.remove('wall-block');
+    });
+    pathHoles.delete(`${end[0]}-${end[1]}`);
+  }
+
+  function getAvailableNeighbors(row: number, col: number) {
+    const neighbors: number[][] = [];
+    // Check and add valid neighbors (within maze boundaries and unvisited)
+    checkBound(row - 2, col);
+    checkBound(row + 2, col);
+    checkBound(row, col + 2);
+    checkBound(row, col - 2);
+
+    return neighbors;
+
+    function checkBound(r: number, c: number) {
+      const validRow = r > 0 && r < rows;
+      const validCol = c > 0 && c < cols;
+      if (validRow && validCol && !visited.has(`${r}-${c}`)) {
+        neighbors.push([r, c]);
+      }
+    }
+  }
+}
+
 async function design(e: MouseEvent) {
   designBtn?.classList.add('design-clicked');
   disableControlPanel(true);
 
-  await maze(e);
+  await designMaze();
   const visited = new Set<string>();
 
   for (let r = 0; r < rows; r++) {
