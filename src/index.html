@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Path-finder</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div id="grid" class="grid">
+  </div>
+  <div id="control-panel" class="control-panel">
+    <button id="source" class="source">
+      Source
+    </button>
+    <button id="destination" class="destination">
+      Destination
+    </button>
+    <button id="wall" class="wall">
+      Draw wall
+    </button>
+    <button id="bfs" class="bfs">
+      BFS
+    </button>
+    <button id="maze" class="maze">
+      Maze
+    </button>
+    <button id="design" class="design">
+      Design
+    </button>
+    <div class="speed-container">
+      
+      <select name="speed" id="speed">
+        <option selected value="20">20ms</option>
+        <option value="50">50ms</option>
+        <option value="100">100ms</option>
+      </select>
+      <label class="speed-lable" for="speed">Speed</label>
+    </div>
+  </div>
+  <script src="../build/index.js"></script>
+</body>
+
+</html>

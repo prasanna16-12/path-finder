@@ -1,0 +1,279 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  width: 100vw;
+  height: 100vh;
+  font-family: poppins, 'Courier New', Courier, monospace;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: center;
+  justify-content: space-between;
+  align-items: center;
+}
+
+select {
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid #1A1A1A;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #3B3B3B;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  height: fit-content;
+  min-width: 0;
+  outline: none;
+  padding: 8px 24px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  will-change: transform;
+}
+
+.speed-container{
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+}
+
+.speed-lable{
+  z-index: 100;
+  position: absolute;
+  left: 5%;
+  top: -10%;
+  padding-left: .5rem;
+  padding-right: .5rem;
+  background-color: white;
+  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 12px;
+  font-weight: 600;
+  line-height: normal;
+}
+
+
+.grid {
+  width: 100%;
+  height: 90%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: flex-start;
+  align-content: flex-start;
+
+}
+
+.block {
+  width: 1rem;
+  height: 1rem;
+  background-color: rgb(255, 255, 255);
+  border: .5px inset rgba(0, 0, 0, 0.65);
+}
+
+.source-block {
+  background-color: #4abd70 !important;
+}
+
+
+.destination-block {
+  background-color: #527ed6 !important;
+}
+
+.wall-block {
+  background-color: #563a21 !important;
+}
+
+
+.control-panel {
+  width: 100%;
+  height: 10%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+.control-panel > button{
+  appearance: none;
+  background-color: transparent;
+  border: 2px solid #1A1A1A;
+  border-radius: 4px;
+  box-sizing: border-box;
+  color: #3B3B3B;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 16px;
+  font-weight: 600;
+  line-height: normal;
+  margin: .8rem;
+  height: fit-content;
+  min-width: 0;
+  outline: none;
+  padding: 8px 24px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  will-change: transform;
+}
+
+
+.control-panel-disable{
+  pointer-events: none;
+}
+
+.button:disabled {
+  pointer-events: none;
+}
+
+.source-clicked {
+  color: #000000;
+  background-color: #4abd70 !important;
+  box-shadow: rgba(43, 105, 35, 0.606) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.bfs-clicked {
+  color: #000000;
+  background-color: #e3e34e !important;
+  box-shadow: rgba(215, 215, 42, 0.866) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.dfs-clicked {
+  color: #000000;
+  background-color: #f1a08a !important;
+  box-shadow: rgba(235, 104, 48, 0.679) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.wall-clicked {
+  color: #ffffff !important;
+  background-color: #692d1d !important;
+  box-shadow: rgba(107, 51, 27, 0.679) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.source:hover {
+  color: #000000;
+  background-color: #4abd70;
+  box-shadow: rgba(43, 105, 35, 0.606) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+select:hover {
+  color: #000000;
+  background-color: #41b8e8;
+  box-shadow: rgba(45, 164, 200, 0.606) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+select:hover + .speed-lable{
+  left: -5%;
+  transform: translateY(-15px);
+  background-color: transparent;
+}
+
+.wall:hover {
+  color: #ffffff;
+  background-color: #692d1d !important;
+  box-shadow: rgba(107, 51, 27, 0.679) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.dfs:hover {
+  color: #000000;
+  background-color: #f1a08a;
+  box-shadow: rgba(235, 104, 48, 0.679) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.bfs:hover {
+  color: #000000;
+  background-color: #e3e34e;
+  box-shadow: rgba(215, 215, 42, 0.866) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.maze:hover {
+  color: #ffffff;
+  background-color: #270dd2;
+  box-shadow: rgba(9, 42, 160, 0.866) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.maze-clicked {
+  color: #ffffff !important;
+  background-color: #270dd2 !important;
+  box-shadow: rgba(9, 42, 160, 0.866) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.design:hover {
+  color: #ffffff;
+  background-image: linear-gradient(to top, #fcc5e4 0%, #fda34b 15%, #ff7882 35%, #c8699e 52%, #7046aa 71%, #0c1db8 87%, #020f75 100%);
+  box-shadow: rgba(238, 65, 131, 0.866) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.design-clicked {
+  color: #ffffff !important;
+  background-image: linear-gradient(to top, #fcc5e4 0%, #fda34b 15%, #ff7882 35%, #c8699e 52%, #7046aa 71%, #0c1db8 87%, #020f75 100%) !important;
+  box-shadow: rgba(242, 81, 142, 0.866) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.destination-clicked {
+  color: #000000;
+  background-color: #527ed6 !important;
+  box-shadow: rgba(71, 130, 233, 0.694) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.visited-block {
+  /* color: #000000; */
+  background-color: #dfce60 !important;
+  animation: leFadeIn 1000ms;
+}
+
+.path-block {
+  /* color: #000000; */
+  background-color: #22a8de !important;
+  animation: leFadeIn 1000ms; 
+}
+
+
+@keyframes leFadeIn {
+  from { opacity: 0 }
+  to { opacity: 1 }
+}
+
+.destination:hover {
+  color: #000000;
+  background-color: #527ed6;
+  box-shadow: rgba(71, 130, 233, 0.694) 0 8px 15px;
+  transform: translateY(-2px);
+}
+
+.button:active {
+  box-shadow: none;
+  transform: translateY(0);
+}
