@@ -13,7 +13,7 @@
     "compile": "tsc",
     "fix": "gts fix",
     "build": "rimraf ./build && tsc && npm run copy-files",
-    "copy-files": "copyfiles -u 1 src/**/*.html src/**/*.css build/",
+    "copy-files": "copyfiles -u 1 src/**/*.html src/**/*.css src/static/* build/",
     "start:dev": "npx tsc -w",
     "start": "npm run build && node build/index.js",
     "prepare": "npm run compile",

@@ -146,7 +146,7 @@ select {
 }
 
 .source-clicked {
-  color: #000000;
+  color: #f9f9f9 !important;
   background-color: #4abd70 !important;
   box-shadow: rgba(43, 105, 35, 0.606) 0 8px 15px;
   transform: translateY(-2px);
@@ -174,7 +174,7 @@ select {
 }
 
 .source:hover {
-  color: #000000;
+  color: #fcfcfc;
   background-color: #4abd70;
   box-shadow: rgba(43, 105, 35, 0.606) 0 8px 15px;
   transform: translateY(-2px);
@@ -243,7 +243,7 @@ select:hover + .speed-lable{
 }
 
 .destination-clicked {
-  color: #000000;
+  color: #f9f9f9 !important;
   background-color: #527ed6 !important;
   box-shadow: rgba(71, 130, 233, 0.694) 0 8px 15px;
   transform: translateY(-2px);
@@ -268,7 +268,7 @@ select:hover + .speed-lable{
 }
 
 .destination:hover {
-  color: #000000;
+  color: #ffffff;
   background-color: #527ed6;
   box-shadow: rgba(71, 130, 233, 0.694) 0 8px 15px;
   transform: translateY(-2px);
