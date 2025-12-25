@@ -126,12 +126,29 @@ function whenClicked(e: MouseEvent) {
 }
 
 function getGridSize(element: HTMLElement | null | any): number[] {
-  const width = element?.offsetWidth;
-  const height = element?.offsetHeight;
-  const remWidth = width / 16;
-  const remHeight = height / 16;
-  // Return the number of rem that the div is wide
-  return [Math.floor(remWidth), Math.floor(remHeight)];
+  if (!element) return [0, 0];
+
+  // Measure available grid space
+  const gridWidth = element.clientWidth || element.offsetWidth || 0;
+  const gridHeight = element.clientHeight || element.offsetHeight || 0;
+
+  // Create a temporary .block to measure the actual block size (handles rem and font-size variations)
+  const temp = document.createElement('div');
+  temp.className = 'block';
+  temp.style.position = 'absolute';
+  temp.style.visibility = 'hidden';
+  temp.style.pointerEvents = 'none';
+  element.appendChild(temp);
+
+  const blockWidth = temp.offsetWidth || parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+  const blockHeight = temp.offsetHeight || blockWidth;
+
+  element.removeChild(temp);
+
+  const cols = Math.max(1, Math.floor(gridWidth / blockWidth));
+  const rows = Math.max(1, Math.floor(gridHeight / blockHeight));
+
+  return [cols, rows];
 }
 
 function disableControlPanel(flag: boolean) {
